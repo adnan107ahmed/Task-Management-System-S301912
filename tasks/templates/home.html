@@ -220,18 +220,8 @@ nav {
         <div class="logo">Task Manager</div>
         <nav>
             <ul class="nav-links">
-                <li>
-                    <select class="project-select" id="projectDropdown" onchange="filterTasks()">
-                        <option value="" disabled selected>Select a Project</option>
-                        {% for project in projects %}
-                            <option value="{{ project.id }}" {% if project.id == request.GET.project_id %}selected{% endif %}>{{ project.name }}</option>
-                        {% empty %}
-                            <option disabled>No Projects Found</option>
-                        {% endfor %}
-                    </select>
-                </li>
                 <li><a href="/">Tasks</a></li>  
-                <li><a href="/">Projects</a></li>  
+                <li><a href="/projects_list/">Projects</a></li>  
 
                 <li><a href="admin/">Log Out</a></li>
             </ul>
@@ -241,10 +231,21 @@ nav {
 
     <!-- Tasks Display -->
     <div class="tasks-list">
-        <h2>Tasks</h2>
-        <a href="/task/create/" class="btn btn-delete">Add Task</a>
-        <a href="/create_project/"  class="btn btn-delete">Create Project</a>
+        <h2>
+        <a style="text-decoration: none;" href="/task/create/" class="btn">Add Task</a>
+        </h2> 
+        <br>
+        Filter
+        <select class="project-select" id="projectDropdown" onchange="filterTasks()">
+            <option value="" disabled selected>Select a Project</option>
+            {% for project in projects %}
+                <option value="{{ project.id }}" {% if project.id == request.GET.project_id %}selected{% endif %}>{{ project.name }}</option>
+            {% empty %}
+                <option disabled>No Projects Found</option>
+            {% endfor %}
+        </select>
 
+       
       <table class="task-table">
     <thead>
         <tr>

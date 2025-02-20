@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script defer src="{% static 'script.js' %}"></script>
+    
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        /* Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #007bff;
+            padding: 15px 20px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            font-size: 28px;
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Table Styles */
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-table th, .task-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .task-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .task-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .task-table tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: #007bff;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="logo">Projects</div>
+        <nav>
+            <ul class="nav-links">
+                <li>
+                    <a href="/">Tasks</a>
+                </li>
+                <li>
+                    <a href="/admin">Log Out</a>
+                </li>
+            </ul>
+            <div class="menu-toggle">&#9776;</div>
+        </nav>
+    </header>
+
+    <div class="tasks-list">
+        <h2>Projects</h2>
+        <br>
+        <a href="{% url 'create_project' %}" class="btn btn-delete">Create Project</a>
+
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.name }}</td>
+                    <td>
+                        <a href="{% url 'edit_project' project.id %}" class="btn btn-edit">Edit</a>
+                        <a href="{% url 'delete_project' project.id %}" class="btn btn-delete" 
+                           onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No Projects Found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.querySelector(".menu-toggle");
+            const navLinks = document.querySelector(".nav-links");
+
+            menuToggle.addEventListener("click", () => {
+                navLinks.classList.toggle("show");
+            });
+        });
+
+        function filterTasks() {
+            const projectDropdown = document.getElementById("projectDropdown");
+            const projectId = projectDropdown.value;
+            if (projectId) {
+                window.location.href = `/tasks/?project_id=${projectId}`;
+            }
+        }
+    </script>
+
+</body>
+</html>

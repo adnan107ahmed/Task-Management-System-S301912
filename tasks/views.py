@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Project, Task
+from django.db import IntegrityError
 
 def home(request, project_id=None):
     # If a project_id is passed in the URL, filter tasks by that project
@@ -14,15 +15,34 @@ def home(request, project_id=None):
 
     return render(request, 'home.html', {'tasks': tasks, 'projects': projects, 'selected_project_id': project_id})
 
-def create_project(request):
+def projects_list(request):
+    projects = Project.objects.all()
+    return render(request, 'projects_list.html' , {'projects': projects })
+
+
+def create_or_update_project(request, project_id=None):
+    error = None
+    project = None
+
+    if project_id:
+        project = get_object_or_404(Project, id=project_id)
+
     if request.method == 'POST':
         name = request.POST['name']
 
-        Project.objects.create(
-            name=name,
-        )
+        try:
+            if project:
+                project.name = name  # Update project
+                project.save()
+            else:
+                Project.objects.create(name=name)  # Create new project
 
-    return render(request, 'create_project.html')
+            return redirect('projects_list')
+
+        except IntegrityError:
+            error = "Project name must be unique. Please choose a different name."
+
+    return render(request, 'create_project.html', {'project': project, 'error': error})
 
 def create_or_update_task(request, task_id=None):
     if task_id:  
@@ -65,3 +85,8 @@ def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)  
     task.delete()
     return redirect('home')
+
+def delete_project(request, project_id):
+ project = get_object_or_404(Project, id=project_id)
+ project.delete()
+ return redirect('projects_list')

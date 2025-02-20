@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Project</title>
+    <title>{% if project %}Edit Project{% else %}Create Project{% endif %}</title>
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
@@ -11,17 +11,24 @@
 <body>
 
     <div class="container">
-        <h2>Create a New Project</h2>
+        <h2>{% if project %}Edit Project{% else %}Create a New Project{% endif %}</h2>
+
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
 
         <form method="post">
             {% csrf_token %}
             
             <label for="name">Project Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" value="{{ project.name|default:'' }}" required>
 
-            <button type="submit" class="btn">Create Project</button>
+            <button type="submit" class="btn">
+                {% if project %}Update Project{% else %}Create Project{% endif %}
+            </button>
         </form>
 
+        <a href="{% url 'projects_list' %}" class="back-link">Back to Projects</a>
     </div>
 
 </body>
