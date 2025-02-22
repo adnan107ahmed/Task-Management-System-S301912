@@ -67,6 +67,8 @@ def create_or_update_project(request, project_id=None):
 
     if project_id:
         project = get_object_or_404(Project, id=project_id)
+        if project and hasattr(request.user, 'role') and request.user.role == "user":
+            return redirect('home')
 
     if request.method == 'POST':
         name = request.POST['name']
@@ -119,13 +121,13 @@ def create_or_update_task(request, task_id=None):
     return render(request, 'task_form.html', {'task': task, 'projects': Project.objects.all()})
 
 def delete_task(request, task_id):
-    if request.user == "admin":
+    if request.user.role == "admin":
         task = get_object_or_404(Task, id=task_id)
         task.delete()
     return redirect('home')
 
 def delete_project(request, project_id):
-    if request.user == "admin":
+    if request.user.role == "admin":
         project = get_object_or_404(Project, id=project_id)
         project.delete()
     return redirect('projects_list')
