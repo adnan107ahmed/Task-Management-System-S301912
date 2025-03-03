@@ -1,0 +1,22 @@
+<header>
+    <div class="logo">Task Manager</div>
+    <button class="menu-toggle">☰</button>
+    <nav>
+        <ul id="menu">
+            <li>{{ request.user }}</li>
+            <li><a href="{{ link }}">{{ name }}</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.querySelector(".menu-toggle");
+        const menu = document.getElementById("menu");
+
+        menuToggle.addEventListener("click", () => {
+            menu.classList.toggle("show");
+        });
+    });
+</script>
