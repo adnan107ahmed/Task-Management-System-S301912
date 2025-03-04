@@ -14,14 +14,12 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.username} ({self.role})"
 
-# Project model
 class Project(models.Model):
     name = models.CharField(max_length=160, unique=True)
 
     def __str__(self):
         return f"Name: {self.name}"
 
-# Task model
 class Task(models.Model):
     title = models.CharField(max_length=225)
     description = models.TextField()

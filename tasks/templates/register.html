@@ -3,56 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Task Management System</title>
+    {% load static %}
+    <link static rel="stylesheet" href="../static/tasks/style.css">
+   <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #6d7183;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+   </style>
 </head>
 <body>
-    <h2>Register</h2>
-
-    <!-- Display errors if the form is not valid -->
-    {% if form.errors %}
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ error }}</li>
+    <div class="container">
+        <h2>Register</h2>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
                 {% endfor %}
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-    <!-- Form to register a new user -->
-    <form method="POST">
-        {% csrf_token %}
-        
-        <!-- Username field -->
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username" value="{{ form.username.value }}" required>
-        </div>
-
-        <!-- Password field -->
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" value="{{ form.password.value }}" required>
-        </div>
-
-        <!-- Role field -->
-        <div>
-            <label for="role">Role:</label>
-            <select name="role" id="role" required>
+            </ul>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" value="{{ form.username.value }}" required>
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <input type="password" name="password" placeholder="Password" value="{{ form.password.value }}" required>
+            {% if form.password.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <select name="role" required>
                 <option value="admin" {% if form.role.value == 'admin' %}selected{% endif %}>Admin</option>
                 <option value="user" {% if form.role.value == 'user' %}selected{% endif %}>User</option>
             </select>
-        </div>
-
-        <!-- Phone Number field -->
-        <div>
-            <label for="phone_number">Phone Number:</label>
-            <input type="text" name="phone_number" id="phone_number" value="{{ form.phone_number.value }}" required>
-        </div>
-
-        <button type="submit">Register</button>
-    </form>
-
-    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            {% if form.role.errors %}
+                <ul class="errorlist">
+                    {% for error in form.role.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <input type="text" name="phone_number" placeholder="Phone Number" value="{{ form.phone_number.value }}" required>
+            {% if form.phone_number.errors %}
+                <ul class="errorlist">
+                    {% for error in form.phone_number.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
 </body>
 </html>

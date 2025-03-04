@@ -87,8 +87,10 @@ def create_or_update_project(request, project_id=None):
 
 def create_or_update_task(request, task_id=None):
     task = get_object_or_404(Task, id=task_id) if task_id else None
+
     if task and hasattr(request.user, 'role') and request.user.role == "user":
         return redirect('home')
+
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
@@ -99,7 +101,7 @@ def create_or_update_task(request, task_id=None):
 
         project = get_object_or_404(Project, id=project_id)
 
-        if hasattr(request.user, 'role') and request.user.role == "user" and task:
+        if task:
             task.title = title
             task.description = description
             task.due_date = due_date
@@ -116,6 +118,7 @@ def create_or_update_task(request, task_id=None):
                 status=status,
                 project=project
             )
+
         return redirect('home')
 
     return render(request, 'task_form.html', {'task': task, 'projects': Project.objects.all()})

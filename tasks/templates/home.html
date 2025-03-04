@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management System</title>
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
-    <script defer src="{% static 'tasks/script.js' %}"></script>
 </head>
 <body>
     {% include 'layout/header.html' with link='/projects_list' name='Projects' %}
@@ -61,7 +60,6 @@
             </tbody>
         </table>
     </div>
-
 </body>
 <script>
     function filterTasks() {

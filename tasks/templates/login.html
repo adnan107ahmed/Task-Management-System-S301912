@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Task Management System</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+    <link static rel="stylesheet" href="../static/tasks/style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #6d7183;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-
     <div class="container">
+        <h1>Task Management System</h1>
         <h2>Login</h2>
-
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -19,32 +29,27 @@
                 {% endfor %}
             </ul>
         {% endif %}
-
         <form method="POST">
             {% csrf_token %}
-            {{ form.username }}
+            <input type="text" name="username" placeholder="Username" required>
             {% if form.username.errors %}
-                <ul class="errorlist">
+                <ul class="error-message">
                     {% for error in form.username.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
-            
-            {{ form.password }}
+            <input type="password" name="password" placeholder="Password" required>
             {% if form.password.errors %}
-                <ul class="errorlist">
+                <ul class="error-message">
                     {% for error in form.password.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
-            
             <button type="submit">Login</button>
         </form>
-
         <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
     </div>
-
 </body>
 </html>

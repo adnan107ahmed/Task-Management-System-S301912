@@ -6,7 +6,18 @@
     <title>{% if project %}Edit Project{% else %}Create Project{% endif %}</title>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+    <link static rel="stylesheet" href="../static/tasks/style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #6d7183;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -20,8 +31,8 @@
         <form method="post">
             {% csrf_token %}
             
-            <label for="name">Project Name:</label>
-            <input type="text" id="name" name="name" value="{{ project.name|default:'' }}" required>
+            <label for="name">Project Name</label>
+            <input type="text" id="name" name="name" value="{{ project.name|default:'' }}" required placeholder="Enter project name">
 
             <button type="submit" class="btn">
                 {% if project %}Update Project{% else %}Create Project{% endif %}
@@ -31,5 +42,4 @@
         <a href="{% url 'projects_list' %}" class="back-link">Back to Projects</a>
     </div>
 
-</body>
-</html>
+</b
