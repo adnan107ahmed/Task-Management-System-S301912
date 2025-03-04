@@ -79,6 +79,7 @@ nav ul li a:hover {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    overflow-x: auto;
 }
 
 .task-table th, .task-table td {
@@ -257,6 +258,7 @@ button:active {
         <h2>Projects</h2>
         <br>
         <a href="{% url 'create_project' %}" class="btn btn-delete">Create Project</a>
+        <div style="overflow-x: auto;">
 
         <table class="task-table">
             <thead>
@@ -283,6 +285,7 @@ button:active {
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 
     <script>

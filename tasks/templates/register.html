@@ -263,7 +263,7 @@ button:active {
         {% endif %}
         <form method="POST">
             {% csrf_token %}
-            <input type="text" name="username" placeholder="Username" value="{{ form.username.value }}" required>
+            <input type="text" name="username" placeholder="Username" required>
             {% if form.username.errors %}
                 <ul class="errorlist">
                     {% for error in form.username.errors %}
@@ -271,7 +271,7 @@ button:active {
                     {% endfor %}
                 </ul>
             {% endif %}
-            <input type="password" name="password" placeholder="Password" value="{{ form.password.value }}" required>
+            <input type="password" name="password" placeholder="Password" required>
             {% if form.password.errors %}
                 <ul class="errorlist">
                     {% for error in form.password.errors %}
@@ -290,7 +290,7 @@ button:active {
                     {% endfor %}
                 </ul>
             {% endif %}
-            <input type="text" name="phone_number" placeholder="Phone Number" value="{{ form.phone_number.value }}" required>
+            <input type="text" name="phone_number" placeholder="Phone Number" required>
             {% if form.phone_number.errors %}
                 <ul class="errorlist">
                     {% for error in form.phone_number.errors %}
