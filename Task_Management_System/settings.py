@@ -37,7 +37,7 @@ SECRET_KEY = 'django-insecure-eka0@f)59=*9gy4r&reei9z2xz#2+)n_$e7a#z5aa-i%%f-eul
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-LOGIN_URL = '/login/'
+LOGIN_URL = '/login'
 
 ALLOWED_HOSTS = ['task-management-system-s301912.onrender.com', 'localhost', '127.0.0.1']
 
