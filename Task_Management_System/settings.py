@@ -15,7 +15,7 @@ import os
 
 import os
 
-STATIC_URL = '/static/'
+STATIC_URL = 'tasks/static'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Add this line to define STATIC_ROOT
